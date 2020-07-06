@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,14 +16,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.teste);
-        executarSom();
+
 
     }
 
-    public void executarSom(){
+    public void executarSom(View view){
         if(mediaPlayer != null){
             mediaPlayer.start();
+        }
+    }
+
+    public void pauserSom(View view){
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.pause();
+        }
+    }
+
+    public void stopSom(View view){
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.teste);
         }
     }
 }
