@@ -34,12 +34,29 @@ public class MainActivity extends AppCompatActivity {
 
         //recupera os dados de valor maximo e valor atual do volume
         int valumeMax = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int volumeAtual = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        final int volumeAtual = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         //configura os valores maximos para a seekbar
         seekBar.setMax(valumeMax);
         //configura valor atual do seekBar
         seekBar.setProgress(volumeAtual);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,progress,0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
     }
 
@@ -59,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
         if(mediaPlayer.isPlaying()){
             mediaPlayer.stop();
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.teste);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.pause();
         }
     }
 }
